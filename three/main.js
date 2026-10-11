@@ -1,6 +1,6 @@
 import * as T from '../vendor/three.module.js';
-import {box,objectModel,disposeObject} from './models.js?v=3';
-import {ReefScene} from './reef.js?v=3';
+import {box,objectModel,disposeObject} from './models.js?v=4';
+import {ReefScene} from './reef.js?v=4';
 
 let renderer=null,active=null,failed=false,last=0;
 const raycaster=new T.Raycaster(),pointer=new T.Vector2(),puzzlePositions=new Map();
@@ -15,7 +15,7 @@ function ensureRenderer(){
   renderer.domElement.className='nv3d-canvas';renderer.domElement.addEventListener('pointerup',pick);renderer.domElement.addEventListener('keydown',keyControl);
   renderer.domElement.addEventListener('webglcontextlost',e=>{e.preventDefault();failed=true;unmount();document.querySelector('#render-mode')?.replaceChildren(document.createTextNode('2D  /  graphics unavailable'))});
   return true;
- }catch(error){console.warn('3D unavailable; keeping playable 2D games.',error);failed=true;return false}
+ }catch(error){console.warn('3D unavailable; keeping playable 2D games.',error);failed=true;document.querySelector('#render-mode')?.replaceChildren(document.createTextNode('2D / graphics unavailable'));return false}
 }
 function unmount(){if(!active)return;if(active.kind==='puzzle')for(const item of active.items)puzzlePositions.set(item.id,item.mesh.position.clone());active.source.classList.remove('nv3d-source');active.source.removeAttribute('aria-hidden');if(active.kind==='fish'&&active.host.isConnected)active.host.before(active.source);active.host.remove();active.picture?.dispose();active.scene.traverse(o=>o.shadow?.dispose());disposeObject(active.scene);active=null}
 function sourceNow(){if(typeof window.neuroState!=="function")return null;const s=window.neuroState();if(!s.game)return null;const selectors={fish:'#fish-canvas',memory:'.memory-board',puzzle:'.puzzle-board',pattern:'.echo-board',guess:'#guess-object'};const source=document.querySelector(selectors[s.game]||'__none');return source?{source,kind:s.game}:null}
@@ -30,6 +30,7 @@ function mount(source,kind){
  const camera=new T.OrthographicCamera(-6,6,5,-5,.1,100);camera.position.set(0,2.5,20);camera.lookAt(0,0,0);
  active={source,kind,host,scene,camera,items:[],live,focus:0,caption,time:0};
  if(kind==='fish'){
+  renderer.domElement.tabIndex=-1;renderer.domElement.setAttribute('role','img');renderer.domElement.setAttribute('aria-label','Animated 3D reef with your tuna and approaching sea creatures');
   camera.position.set(0,.7,22);camera.lookAt(0,0,0);active.reef=new ReefScene(scene);
   // Keep the original pointer surface on top; all steering listeners remain intact.
   host.append(source);source.classList.add('nv3d-source');active.fishGame=window.neuroState().fish;

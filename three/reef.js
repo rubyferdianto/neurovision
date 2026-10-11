@@ -1,5 +1,5 @@
 import * as T from '../vendor/three.module.js';
-import {ball,box,tube,objectModel,fishModel,disposeObject} from './models.js?v=3';
+import {ball,box,tube,objectModel,fishModel,disposeObject} from './models.js?v=4';
 export class ReefScene {
  constructor(scene){
   this.scene=scene;this.root=new T.Group();scene.add(this.root);this.targets=new Map();this.effects=new Map();this.plants=[];
@@ -22,7 +22,7 @@ export class ReefScene {
   const unit=12/game.height,halfW=game.width*unit/2,toX=x=>x*unit-halfW,toY=y=>6-y*unit;
   this.player.position.set(toX(game.width*.27)+Math.sin(game.player.bite/.38*Math.PI)*.1,toY(game.player.y),0);
   this.player.scale.setScalar(game.player.drawSize*unit);this.player.rotation.z=T.MathUtils.clamp((game.player.y-game.player.targetY)*.003,-.3,.3);this.player.rotation.y=-.14;
-  this.animateFish(this.player,time);this.player.visible=game.player.flash<.4||Math.sin(time*26)>-.5;
+  this.animateFish(this.player,time);this.player.userData.body.scale.y=1+Math.sin(game.player.bite/.38*Math.PI)*.04;this.player.visible=game.player.flash<.4||Math.sin(time*26)>-.5;
   const alive=new Set();for(const target of game.fish){alive.add(target);let mesh=this.targets.get(target);if(!mesh){mesh=fishModel(target.kind==='hazard'?'jelly':target.kind==='predator'?'barracuda':'prey',target.color||'#76bec3');this.targets.set(target,mesh);this.root.add(mesh);if(target.kind==='immune'){const ring=new T.Mesh(new T.TorusGeometry(1.5,.035,6,40),new T.MeshBasicMaterial({color:'#beffda'}));mesh.add(ring)}}mesh.position.set(toX(target.x),toY(target.y),0);mesh.scale.setScalar(target.r*unit);mesh.rotation.y=Math.PI+.13;mesh.rotation.z=target.tilt||0;this.animateFish(mesh,time+target.phase,target.effort||1)}
   for(const [target,mesh] of this.targets)if(!alive.has(target)){this.root.remove(mesh);disposeObject(mesh);this.targets.delete(target)}
   const a=game.ambush;this.warning.visible=a?.phase==='warning';if(a?.phase==='warning'){const spec=window.neuroMonsterSpec(a.type);this.warning.position.y=toY(a.y);this.warning.scale.y=(a.r*spec.body+game.player.size*.5)*2*unit;this.warning.material.opacity=.1+Math.sin(time*12)*.05}
@@ -31,9 +31,9 @@ export class ReefScene {
    this.monster.visible=true;this.monster.position.set(toX(a.x),toY(a.y),.1);this.monster.scale.setScalar(a.r*unit);this.monster.rotation.y=a.side===1?Math.PI+.12:-.12;this.animateFish(this.monster,time,a.type==='whale'?.5:1.8);
   }else if(this.monster)this.monster.visible=false;
   const activeEffects=new Set(game.effects);
-  for(const e of game.effects){let cloud=this.effects.get(e);if(!cloud){cloud=new T.Group();for(let i=0;i<6;i++){const puff=ball(cloud,'#ac384c',[Math.sin(i*2.4)*.13,Math.cos(i*3.7)*.1,i*.03],[.1,.1,.1],{transparent:true,opacity:.13,depthWrite:false});puff.material.roughness=1}this.root.add(cloud);this.effects.set(e,cloud)}e.age+=dt;cloud.position.set(toX(e.x)-e.age*.6,toY(e.y)+e.age*.1,.2);cloud.scale.setScalar(.7+e.age*1.5);cloud.children.forEach(o=>o.material.opacity=Math.max(0,.13*(1-e.age/1.7)))}
+  for(const e of game.effects){let cloud=this.effects.get(e);if(!cloud){cloud=new T.Group();for(let i=0;i<6;i++){const puff=ball(cloud,'#ac384c',[Math.sin(i*2.4)*.13,Math.cos(i*3.7)*.1,i*.03],[.1,.1,.1],{transparent:true,opacity:.13,depthWrite:false});puff.material.roughness=1}cloud.userData.prey=fishModel('prey');this.root.add(cloud.userData.prey);this.root.add(cloud);this.effects.set(e,cloud)}e.age+=dt;const swallow=Math.min(1,e.age/.3),prey=cloud.userData.prey;prey.visible=swallow<1;prey.position.set(toX(e.x)+(this.player.position.x+game.player.drawSize*unit*1.2-toX(e.x))*swallow,toY(e.y)+(this.player.position.y-toY(e.y))*swallow,0);prey.scale.setScalar(e.r*unit*(1-swallow));prey.rotation.y=Math.PI;cloud.position.set(toX(e.x)-e.age*.6,toY(e.y)+e.age*.1,.2);cloud.scale.setScalar(.7+e.age*1.5);cloud.children.forEach(o=>o.material.opacity=Math.max(0,.13*(1-e.age/1.7)))}
   game.effects=game.effects.filter(e=>e.age<1.7);
-  for(const [e,cloud] of this.effects)if(!activeEffects.has(e)||e.age>=1.7){this.root.remove(cloud);disposeObject(cloud);this.effects.delete(e)}
+  for(const [e,cloud] of this.effects)if(!activeEffects.has(e)||e.age>=1.7){this.root.remove(cloud.userData.prey);disposeObject(cloud.userData.prey);this.root.remove(cloud);disposeObject(cloud);this.effects.delete(e)}
   for(const p of this.plants){p.cluster.position.x=((p.base-game.distance*unit*.27+27)%54+54)%54-27;p.coral.rotation.z=Math.sin(time*.8+p.phase)*.09}
   this.shoal.forEach((f,i)=>{f.position.set(((i*2.9-time*.5+22)%44)-22,2+Math.sin(i*2.4+time*.5),-4-i%3);f.rotation.y=Math.PI;this.animateFish(f,time+i)});
   this.rays.forEach((r,i)=>r.rotation.z=-.25+Math.sin(time*.3+i)*.025);
