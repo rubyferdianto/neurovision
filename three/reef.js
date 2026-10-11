@@ -40,4 +40,4 @@ export class ReefScene {
   this.rays.forEach((r,i)=>r.rotation.z=-.25+Math.sin(time*.3+i)*.025);
   this.dust.rotation.z=Math.sin(time*.05)*.03;
  }
-}
+}
