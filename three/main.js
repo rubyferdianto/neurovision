@@ -7,6 +7,15 @@ function textTexture(text,color='#edf5ed'){
  const c=document.createElement('canvas');c.width=512;c.height=128;const ctx=c.getContext('2d');ctx.fillStyle=color;ctx.font=text.length<3?'700 128px sans-serif':'600 44px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,256,64,490);const tex=new T.CanvasTexture(c);tex.colorSpace=T.SRGBColorSpace;return tex;
 }
 function label(group,text,x,y,size=1.4,color){const m=new T.Mesh(new T.PlaneGeometry(size,size/4),new T.MeshBasicMaterial({map:textTexture(text,color),transparent:true,depthWrite:false}));m.position.set(x,y,.75);group.add(m);return m}
+function themedSurface(a,mesh,role){a.themeSurfaces.push({material:mesh.material,role});return mesh}
+function syncTheme(a){
+ if(!a)return;
+ const styles=getComputedStyle(a.host);
+ a.scene.background.set(styles.getPropertyValue('--nv-scene').trim());
+ for(const {material,role} of a.themeSurfaces)material.color.set(styles.getPropertyValue('--nv-'+role).trim());
+}
+// Recolor the existing scene without restarting a round, playback, or puzzle move.
+new MutationObserver(()=>syncTheme(active)).observe(document.body,{attributes:true,attributeFilter:['class']});
 function lights(scene){scene.add(new T.HemisphereLight('#ddf7ff','#3a3956',1.3));const sun=new T.DirectionalLight('#fff0e6',3);sun.position.set(-4,7,9);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-12;sun.shadow.camera.right=12;sun.shadow.camera.top=12;sun.shadow.camera.bottom=-12;sun.shadow.normalBias=.025;sun.shadow.bias=-.0001;scene.add(sun);const rim=new T.DirectionalLight('#a5adff',1.3);rim.position.set(5,1,-3);scene.add(rim)}
 function ensureRenderer(){
  if(renderer)return true;if(failed)return false;
@@ -25,11 +34,11 @@ function mount(source,kind){
  const live=document.createElement('span');live.className='nv3d-live';live.setAttribute('aria-live','polite');
  host.append(renderer.domElement,caption,live);source.before(host);
  renderer.domElement.style.filter='';
- const scene=new T.Scene();scene.background=new T.Color(kind==='pattern'?'#20253b':'#182c38');lights(scene);
+ const scene=new T.Scene();scene.background=new T.Color();lights(scene);
  const camera=new T.OrthographicCamera(-6,6,5,-5,.1,100);camera.position.set(0,kind==='pattern'?4:3.2,20);camera.lookAt(0,0,0);
- active={source,kind,host,scene,camera,items:[],live,focus:0,caption,time:0};
+ active={source,kind,host,scene,camera,items:[],themeSurfaces:[],live,focus:0,caption,time:0};
  {
-  buildBoard(active);source.classList.add('nv3d-source');
+  buildBoard(active);syncTheme(active);source.classList.add('nv3d-source');
   renderer.domElement.tabIndex=kind==='puzzle'||kind==='pattern'?0:-1;
   renderer.domElement.setAttribute('role',kind==='puzzle'||kind==='pattern'?'group':'img');renderer.domElement.setAttribute('aria-label',kind==='guess'?'Rotating mystery object':kind==='memory'?'Three-dimensional object collection':'3D '+kind+' board. Use arrow keys to select a tile; Enter or Space to play it.');
  }
@@ -39,21 +48,21 @@ function buildBoard(a){
  const state=window.neuroState(),kind=a.kind;
  if(kind==='guess'){
   const m=objectModel(state.guess.item.answer);m.scale.setScalar(1.6);a.scene.add(m);a.model=m;
-  box(a.scene,'#304751',[0,-1.7,-.2],[7,.12,5]);return;
+  themedSurface(a,box(a.scene,'#ffffff',[0,-1.7,-.2],[7,.12,5]),'floor');return;
  }
  const count=kind==='memory'?state.memory.items.length:kind==='puzzle'?state.puzzle.board.length:state.pattern.size**2;
  const cols=kind==='memory'?4:Math.sqrt(count),rows=Math.ceil(count/cols),step=2;
  a.cols=cols;a.rows=rows;
- const base=bevelBox(a.scene,kind==='pattern'?'#373952':'#345465',[0,0,-.52],[cols*step+.32,rows*step+.32,.4],.1);base.receiveShadow=true;
- box(a.scene,kind==='pattern'?'#171d31':'#203541',[0,0,-.28],[cols*step-.02,rows*step-.02,.06]);
+ const base=themedSurface(a,bevelBox(a.scene,'#ffffff',[0,0,-.52],[cols*step+.32,rows*step+.32,.4],.1),'tray');base.receiveShadow=true;
+ themedSurface(a,box(a.scene,'#ffffff',[0,0,-.28],[cols*step-.02,rows*step-.02,.06]),'bed');
  const maps=[];const picture=kind==='puzzle'?new T.TextureLoader().load('assets/reef.png',()=>maps.forEach(({map,face})=>{map.needsUpdate=true;face.material.map=map;face.material.needsUpdate=true})):null;
  if(picture)picture.colorSpace=T.SRGBColorSpace;
  for(let i=0;i<count;i++){
   const x=(i%cols-(cols-1)/2)*step,y=((rows-1)/2-Math.floor(i/cols))*step;
   if(kind==='memory'){
-   bevelBox(a.scene,'#577580',[x,y,-.1],[1.85,1.85,.24]);
+   themedSurface(a,bevelBox(a.scene,'#ffffff',[x,y,-.1],[1.85,1.85,.24]),'pad');
    const hidden=state.memory.phase==='blank'||((state.memory.phase==='answer'||state.memory.phase==='done')&&i===state.memory.missingIndex);
-   if(!hidden){const model=objectModel(state.memory.items[i][1]);model.scale.setScalar(.62);model.position.set(x,y+.17,.15);model.rotation.y=-.22;a.scene.add(model);a.items.push({mesh:model,x,y:y+.17});label(a.scene,state.memory.items[i][1],x,y-.65,1.7)}else if(state.memory.phase!=='blank')label(a.scene,'?',x,y,1.5);
+   if(!hidden){const model=objectModel(state.memory.items[i][1]);model.scale.setScalar(.62);model.position.set(x,y+.17,.15);model.rotation.y=-.22;a.scene.add(model);a.items.push({mesh:model,x,y:y+.17});themedSurface(a,label(a.scene,state.memory.items[i][1],x,y-.65,1.7,'#ffffff'),'label')}else if(state.memory.phase!=='blank')themedSurface(a,label(a.scene,'?',x,y,1.5,'#ffffff'),'label');
   }else{
    const n=kind==='puzzle'?state.puzzle.board[i]:i+1;if(kind==='puzzle'&&n===0)continue;
    const color=kind==='pattern'?(window.ECHO_COLORS?.[i]||'#ad8bff'):'#c6d9c8';
