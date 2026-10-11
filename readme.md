@@ -2,6 +2,8 @@
 
 NeuroVision is a responsive brain-game site with five activities: visual memory, a sliding image puzzle, a timed object guessing game, a hands-on sequence recall challenge, and a fish survival game. Scores, focus points, and game levels are saved in the browser on the current device.
 
+Watch the [two-minute narrated demo](media/NeuroVision-2-minute-demo.mp4) or download the [two-slide presentation](media/NeuroVision.pptx). The playable site is at [rubyferdianto.github.io/neurovision](https://rubyferdianto.github.io/neurovision/).
+
 ## Design reference
 
 The Studio theme takes cues from [Hootsuite's web dashboard on Mobbin](https://mobbin.com/screens/5aff7542-0a89-481d-af47-2b0d2ca78098): a clear sidebar, welcoming start area, and easy-to-scan activity cards. The Luma theme draws inspiration from [Luma AI's visual canvas on Mobbin](https://mobbin.com/screens/277ab165-4bd2-4021-a4fa-bbd4e273614a), with a cinematic dark backdrop and soft ambient color around the content. Both themes and the game illustrations are original to this prototype.
