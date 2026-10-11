@@ -54,7 +54,7 @@
     el('#echo-slow').addEventListener('click', () => {
       slow = !slow; el('#echo-slow').setAttribute('aria-pressed', String(slow));
       el('#echo-slow').textContent = `Slow replay: ${slow ? 'on' : 'off'}`;
-      if (p.phase !== 'clear') { p.replays++; window.patternPlayback(); }
+      if (p.phase !== 'clear') { if (p.phase !== 'watch') p.attempts++; p.replays++; window.patternPlayback(); }
     });
     el('#echo-sound').addEventListener('click', () => {
       sound = !sound; tone(0);
@@ -73,6 +73,10 @@
     el('#game-stage .stage-title').textContent = 'Follow the glow.';
     el('#game-stage .stage-copy').textContent = `${slow ? 'Slow rhythm' : 'Watch closely'} — ${p.seq.length} lights, in order.`;
     progress();
+    // Replays can be triggered below the board; bring every flashing tile into view.
+    window.later(() => {
+      if (current()) (el('.nv3d-pattern') || el('.echo-board'))?.scrollIntoView({ block: 'center', behavior: 'smooth' });
+    }, 100);
     p.seq.forEach((cell, i) => {
       window.later(() => {
         if (!current()) return;

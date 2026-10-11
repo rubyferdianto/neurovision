@@ -16,7 +16,7 @@ The prototype starts with a simulated signed-in profile for Ruby Ferdianto. The 
 
 ## Deploy
 
-Upload `index.html`, `styles.css`, `app.js`, `levels.js`, `fish.js`, `fish-ocean.js`, and `theme.js`, `pattern.js`, and `pattern.css` to any static web host, such as GitHub Pages, Netlify, or Cloudflare Pages. Set the publish directory to this folder (`NeuroVision`) and leave the build command empty. Upload the `assets/` folder too. Keep these files together; `levels.js` adds the level system and Pattern Echo, `fish.js` adds Tide Eater, and `theme.js` adds the theme switch.
+Upload `index.html`, `styles.css`, `app.js`, `levels.js`, `fish.js`, `fish-ocean.js`, `theme.js`, `pattern.js`, and `pattern.css` to any static web host, such as GitHub Pages, Netlify, or Cloudflare Pages. Set the publish directory to this folder (`NeuroVision`) and leave the build command empty. Upload the `assets/`, `three/`, and `vendor/` folders too. Keep these files together; `levels.js` adds the level system, `pattern.js` adds Pattern Echo's colorful board and unlimited retries, `fish.js` adds Tide Eater, and `theme.js` adds the theme switch.
 
 ## Games
 
