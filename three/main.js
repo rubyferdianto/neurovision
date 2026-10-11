@@ -30,15 +30,23 @@ function loadRealObject(a,g){
  new GLTFLoader().load(g.item.model,gltf=>{
   const object=gltf.scene;
   if(active!==a||window.neuroState().guess!==g){disposeObject(object);return}
-  const bounds=new T.Box3().setFromObject(object),size=bounds.getSize(new T.Vector3()),center=bounds.getCenter(new T.Vector3());
+  const hidden={football:['football_deflated'],bananas:['bananas_a','bananas_b','bananas_c','bananas_d'],rubber_boots:['rubber_boots_dirty_l','rubber_boots_dirt_r'],vintage_suitcase:['vintage_suitcase_02_bottom','vintage_suitcase_02_clasp','vintage_suitcase_02_handle','vintage_suitcase_02_top'],vintage_stapler:['vintage_stapler_staple_single','vintage_stapler_staples'],Camera_01:['Camera_01_strap'],binoculars:['binoculars_strap']}[g.item.id]||[];
+  object.traverse(o=>{if(hidden.includes(o.name))o.visible=false});
+  // Asset packs sometimes include alternative variants. Frame only the chosen object.
+  object.updateMatrixWorld(true);const bounds=new T.Box3();
+  object.traverseVisible(o=>{if(o.isMesh){o.geometry.computeBoundingBox();bounds.union(o.geometry.boundingBox.clone().applyMatrix4(o.matrixWorld))}});
+  const size=bounds.getSize(new T.Vector3()),center=bounds.getCenter(new T.Vector3());
   const longest=Math.max(size.x,size.y,size.z);
   if(!Number.isFinite(longest)||longest<=0){disposeObject(object);window.guessModelFailed?.(g);return}
   const scale=3.05/longest;
   object.position.sub(center);
   const model=new T.Group();model.add(object);model.scale.setScalar(scale);a.model=model;a.scene.add(model);
   floor.position.y=-size.y*scale/2-.04;
+  const flat=size.y/Math.max(size.x,size.z)<.28;
+  a.camera.position.set(0,flat?12:5,flat?10:14);a.camera.lookAt(0,0,0);
   model.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;for(const m of(Array.isArray(o.material)?o.material:[o.material])){if(m.map)m.map.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy())}}});
   a.caption.textContent='REAL OBJECT  /  LOOK CLOSELY';
+  a.host.scrollIntoView({block:'center',behavior:'smooth'});
   window.guessModelReady?.(g);
  },undefined,error=>{
   if(active!==a)return;

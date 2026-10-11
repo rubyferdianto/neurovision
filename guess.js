@@ -107,6 +107,7 @@
     el('#guess-progress').style.width = '100%';
     content.querySelectorAll('.guess-choice,#guess-input,#guess-submit,#guess-skip').forEach(button => { button.disabled = true; });
     el('#guess-result').textContent = correct ? `${g.item.label} — correct in ${(elapsed / 1000).toFixed(1)}s! +${points} points` : `It was ${g.item.label}. ${reveal ? 'Now you can see every detail.' : 'A new object is next.'}`;
+    el('.nv3d-guess')?.scrollIntoView?.({block:'center',behavior:'smooth'});
     el('.game-stage .stage-actions').innerHTML = `<button class="stage-button" id="guess-next">${seen().size === catalog.length ? 'Complete collection' : 'Next unseen object →'}</button><button class="secondary-button" id="guess-finish">Finish session</button>`;
     el('#guess-next').addEventListener('click', window.guessBegin); el('#guess-finish').addEventListener('click', window.finishSession);
   };
