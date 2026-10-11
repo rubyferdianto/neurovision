@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f6f7f3" />
+  <meta name="description" content="A little daily training for a sharper mind. Play visual memory, spatial logic, and perception games." />
+  <title>NeuroVision — your daily brain break</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css?v=3" />
+  <script src="app.js" defer></script>
+  <script src="levels.js" defer></script>
+  <script src="fish-ocean.js?v=7" defer></script>
+  <script src="fish.js?v=7" defer></script>
+  <script src="theme.js?v=3" defer></script>
+</head>
+<body class="theme-studio">
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#home" aria-label="NeuroVision home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>neuro<span class="brand-light">vision</span></span></a>
+      <div class="side-label">YOUR SPACE</div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#home" data-nav="home"><span class="nav-icon">⌂</span>Home</a>
+        <a class="nav-link" href="#games" data-nav="games"><span class="nav-icon">▦</span>All games<span class="nav-count">3</span></a>
+        <a class="nav-link" href="#progress" data-nav="progress"><span class="nav-icon">⌁</span>Your progress</a>
+      </nav>
+      <div class="side-bottom"><div class="side-tip"><span class="tip-spark">✳</span><p><b>A little goes a long way.</b><br />Just 5 minutes of focused play makes a lovely daily habit.</p><span class="tip-art" aria-hidden="true">✺</span></div><button class="profile-button" id="profile-button" aria-label="Signed-in demo profile"><span class="avatar" id="profile-avatar">RF</span><span class="profile-copy"><b id="profile-name">Ruby Ferdianto</b><small>Signed in · Demo</small></span><span class="profile-dots">···</span></button></div>
+    </aside>
+    <main class="main-area">
+      <header class="topbar"><button class="mobile-menu" id="mobile-menu" aria-label="Open menu">☰</button><div class="breadcrumb"><span>Workspace</span><span class="crumb-slash">/</span><b id="breadcrumb-current">Home</b></div><div class="top-actions"><div class="streak-pill"><span>✦</span><b id="streak-count">0 day streak</b></div><button class="icon-button" aria-label="Notifications"><span>♧</span><i></i></button></div></header>
+      <div id="app-content" class="content-wrap"></div>
+      <footer class="footer"><span>Made for curious minds <span class="footer-heart">♥</span></span><span>NeuroVision <span class="footer-dot">·</span> A little brighter every day</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

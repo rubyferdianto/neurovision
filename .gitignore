@@ -1,0 +1,7 @@
+# Local reference material and temporary outputs
+common-ground-kit/
+node_modules/
+.env
+.env.*
+*.log
+.DS_Store
