@@ -1,6 +1,5 @@
 import * as T from '../vendor/three.module.js';
-import {ball,box,tube,objectModel,fishModel,disposeObject} from './models.js';
-
+import {ball,box,tube,objectModel,fishModel,disposeObject} from './models.js?v=3';
 export class ReefScene {
  constructor(scene){
   this.scene=scene;this.root=new T.Group();scene.add(this.root);this.targets=new Map();this.effects=new Map();this.plants=[];
@@ -40,4 +39,4 @@ export class ReefScene {
   this.rays.forEach((r,i)=>r.rotation.z=-.25+Math.sin(time*.3+i)*.025);
   this.dust.rotation.z=Math.sin(time*.05)*.03;
  }
-}
+}
