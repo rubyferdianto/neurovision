@@ -45,3 +45,6 @@ function record(id,score,rounds,minutes){data.sessions||=[];data.sessions.push({
 function finishSession(){clearTimers();if(app.gameId==="puzzle")clearInterval(app.puzzle?.tick);if(app.gameId==="guess")clearInterval(app.guess?.interval);updateBest(app.gameId,app.score);record(app.gameId,app.score,Math.max(1,app.runRounds),app.runRounds*(app.gameId==="memory"?.25:.5));toast(`Session saved · ${app.score} points`);setPage("home")}
 document.querySelectorAll("[data-nav]").forEach(a=>a.addEventListener("click",e=>{e.preventDefault();setPage(a.dataset.nav)}));document.querySelector("#mobile-menu").addEventListener("click",()=>document.querySelector("#sidebar").classList.toggle("open"));document.addEventListener("click",e=>{const side=document.querySelector("#sidebar");if(side.classList.contains("open")&&!e.target.closest("#sidebar")&&!e.target.closest("#mobile-menu"))side.classList.remove("open")});
 applyUserProfile();renderHome();streak();
+
+// Read-only bridge for the 3D presentation layer.
+window.neuroState=()=>app;

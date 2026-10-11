@@ -1,0 +1,16 @@
+.nv3d-mode{font-size:9px;font-weight:800;letter-spacing:1.5px;padding:8px 10px;color:#477364;border:1px solid #abc9bb;border-radius:6px;white-space:nowrap}
+.nv3d-host{position:relative;isolation:isolate;overflow:hidden;border-radius:18px;background:#182c38;box-shadow:0 18px 45px #071f3533;border:1px solid #8eb6bd55;margin:20px auto;width:min(100%,760px);height:480px}
+.nv3d-canvas{display:block;width:100%;height:100%;outline-offset:-4px;touch-action:pan-y}
+.nv3d-canvas:focus-visible{outline:3px solid #e4c37c}
+.nv3d-caption{position:absolute;left:16px;top:14px;pointer-events:none;color:#e0f3ebba;font:700 9px/1.4 sans-serif;letter-spacing:1.6px;z-index:2}
+.nv3d-source:not(.fish-canvas),.nv3d-live{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip-path:inset(50%)!important;white-space:nowrap!important;border:0!important}
+.nv3d-source:not(.fish-canvas):focus-within{position:relative!important;width:auto!important;height:auto!important;clip-path:none!important;white-space:normal!important;margin:12px!important}
+.nv3d-puzzle,.nv3d-pattern{width:min(100%,520px);height:500px;flex-shrink:1}
+.nv3d-guess{height:320px;width:100%;margin:12px 0 24px}
+.nv3d-fish{width:min(100%,1120px);height:clamp(340px,52vh,570px);margin:0 auto}
+.nv3d-fish .fish-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:0;z-index:3;border:0;cursor:crosshair}
+.nv3d-fish .nv3d-canvas{pointer-events:none}
+.nv3d-alert{position:absolute;top:40px;left:5%;right:5%;z-index:4;text-align:center;color:#edfff3;font-size:14px;font-weight:700;text-shadow:0 2px 5px #001926;pointer-events:none}
+.nv3d-alert.danger{color:#ffe0ae;padding:12px;background:#582820a6;border:1px solid #ffac7855;border-radius:8px}
+.theme-luma .nv3d-mode{color:#d1b6f4;border-color:#584867}
+@media(max-width:760px){.nv3d-host{height:400px;border-radius:12px}.nv3d-puzzle,.nv3d-pattern{height:360px}.nv3d-guess{height:260px}.nv3d-fish{height:clamp(360px,58vh,540px)}.nv3d-mode{font-size:8px;padding:6px}.nv3d-caption{font-size:8px;letter-spacing:1px}.nv3d-alert{font-size:11px}}

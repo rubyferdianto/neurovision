@@ -8,7 +8,7 @@ The Studio theme takes cues from [Hootsuite's web dashboard on Mobbin](https://m
 
 ## Run locally
 
-Open `index.html` in a modern browser. The app has no build step or package dependencies. An internet connection is only needed to load the Manrope and DM Sans fonts; the games themselves run locally.
+Run `npm run serve` (Python required), then open `http://localhost:8080`. The browser loads the bundled Three.js modules from `vendor/`; no build step or CDN is needed. Use HTTP rather than opening index.html as a file. An internet connection is only needed for the optional Google Fonts.
 
 ## Demo profile
 
@@ -35,3 +35,9 @@ Fish levels last 3 minutes at level 1, increasing by 20 seconds per level to 6 m
 The player uses a yellowfin tuna sprite adapted from the supplied reference. Monster barracudas ambush from either side after a locked-lane warning. Each charge can remove at most one heart; dodging awards 150 points. The first warning starts at 8 seconds, with randomized shorter intervals at higher levels. Include `assets/tuna.png` and `assets/monster.png` when deploying.
 
 Monster encounters now shuffle barracudas, great white sharks, and humpback whales without repeating within a set of three. Sharks charge faster (200-point dodge); whales cross slower with wider warning lanes (250-point dodge). Ship `assets/shark.png` and `assets/whale.png` alongside the other sprites.
+
+## 3D edition
+
+All five games render real mesh geometry with the locally bundled Three.js 0.186.1 library. Memory objects and recognition objects are procedural models; the slider uses solid textured tiles; Pattern Echo uses lit 3D pads with raycast and keyboard interaction; Tide Eater uses a volumetric reef with modeled tuna, prey, jellyfish, sharks, barracudas and whales. The 2D mechanics and saved progress are retained. If WebGL fails, the original games remain available.
+
+Blender is an asset authoring application, not a browser library. This edition uses procedural Three.js models and does not require Blender. Models are in `three/models.js`, scene integration in `three/main.js`, and reef animation in `three/reef.js`. Include `three/`, `vendor/` (with its MIT license), and `assets/` when deploying. `npm test` covers the existing fish rules and validates model geometry and scene cleanup. Use arrow keys plus Enter/Space on the 3D puzzle/pattern canvas, or click/tap a tile. Native controls are retained for assistive technology.

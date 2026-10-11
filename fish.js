@@ -90,6 +90,7 @@ function fishFrame(game,time){
   if(!game.active)return;
   checkFishCollisions(game);
   if(!game.active)return;
+  if(!window.Neuro3D?.isFishActive(game)){
   const ctx=game.ctx,w=game.width,h=game.height;drawOcean(game,time);
   game.fish.forEach(target=>{
     if(target.kind==="hazard")drawHazard(ctx,target);
@@ -101,6 +102,7 @@ function fishFrame(game,time){
   drawLivingFish(ctx,w*.27+Math.sin(player.bite/.38*Math.PI)*6,player.y,player.drawSize,{time:time/1000,species:0,tilt,flash:player.flash,effort:1+Math.abs(tilt),bite:player.bite,hero:true});
   drawFishAmbush(game,time);
   if(game.statusTime>0){ctx.fillStyle="#ffffff";ctx.font="600 14px sans-serif";ctx.textAlign="center";ctx.shadowColor="#082335";ctx.shadowBlur=9;ctx.fillText(game.status,w*.5,30);ctx.shadowBlur=0}
+  }
   game.hudTime+=dt;if(game.hudTime>.12){game.hudTime=0;updateFishHud(game)}
   if(game.distance>=game.targetDistance){finishFishLevel(game);return}
   game.raf=requestAnimationFrame(t=>fishFrame(game,t));
@@ -220,3 +222,5 @@ function drawFishAmbush(game,time){
   }
   ctx.restore();
 }
+
+window.neuroMonsterSpec=type=>fishMonsterTypes[type]||fishMonsterTypes.barracuda;

@@ -1,0 +1,28 @@
+{
+  "name": "neurovision",
+  "version": "1.0.0",
+  "description": "NeuroVision is a responsive brain-game site with five activities: visual memory, a sliding image puzzle, a timed object guessing game, a hands-on sequence recall challenge, and a fish survival game. Scores, focus points, and game levels are saved in the browser on the current device.",
+  "main": "app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "node tests/fish.test.cjs && node tests/three.test.mjs",
+    "serve": "python -m http.server 8080"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rubyferdianto/neurovision.git"
+  },
+  "keywords": [],
+  "author": "",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/rubyferdianto/neurovision/issues"
+  },
+  "homepage": "https://github.com/rubyferdianto/neurovision#readme",
+  "dependencies": {
+    "three": "0.186.1"
+  },
+  "private": true
+}
