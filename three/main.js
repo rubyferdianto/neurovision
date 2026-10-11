@@ -1,7 +1,9 @@
 import * as T from '../vendor/three.module.js';
 import {box,bevelBox,objectModel,disposeObject} from './models.js?v=5';
+import {GLTFLoader} from '../vendor/addons/loaders/GLTFLoader.js';
+import {RoomEnvironment} from '../vendor/addons/environments/RoomEnvironment.js';
 
-let renderer=null,active=null,failed=false,last=0;
+let renderer=null,active=null,failed=false,last=0,studioEnvironment=null;
 const raycaster=new T.Raycaster(),pointer=new T.Vector2(),puzzlePositions=new Map();
 function textTexture(text,color='#edf5ed'){
  const c=document.createElement('canvas');c.width=512;c.height=128;const ctx=c.getContext('2d');ctx.fillStyle=color;ctx.font=text.length<3?'700 128px sans-serif':'600 44px sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,256,64,490);const tex=new T.CanvasTexture(c);tex.colorSpace=T.SRGBColorSpace;return tex;
@@ -17,6 +19,33 @@ function syncTheme(a){
 // Recolor the existing scene without restarting a round, playback, or puzzle move.
 new MutationObserver(()=>syncTheme(active)).observe(document.body,{attributes:true,attributeFilter:['class']});
 function lights(scene){scene.add(new T.HemisphereLight('#ddf7ff','#3a3956',1.3));const sun=new T.DirectionalLight('#fff0e6',3);sun.position.set(-4,7,9);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-12;sun.shadow.camera.right=12;sun.shadow.camera.top=12;sun.shadow.camera.bottom=-12;sun.shadow.normalBias=.025;sun.shadow.bias=-.0001;scene.add(sun);const rim=new T.DirectionalLight('#a5adff',1.3);rim.position.set(5,1,-3);scene.add(rim)}
+function loadRealObject(a,g){
+ a.guess=g;
+ if(!studioEnvironment){const room=new RoomEnvironment(),pmrem=new T.PMREMGenerator(renderer);studioEnvironment=pmrem.fromScene(room,.04);room.dispose();pmrem.dispose()}
+ a.scene.environment=studioEnvironment.texture;
+ a.scene.environmentIntensity=.8;
+ a.scene.traverse(o=>{if(o.isHemisphereLight)o.intensity=.5;if(o.isDirectionalLight)o.intensity*=.55});
+ const floor=themedSurface(a,box(a.scene,'#ffffff',[0,-1.65,0],[200,.06,200]),'floor');
+ // The background stays theme-aware while authentic geometry and PBR maps retain their colors.
+ new GLTFLoader().load(g.item.model,gltf=>{
+  const object=gltf.scene;
+  if(active!==a||window.neuroState().guess!==g){disposeObject(object);return}
+  const bounds=new T.Box3().setFromObject(object),size=bounds.getSize(new T.Vector3()),center=bounds.getCenter(new T.Vector3());
+  const longest=Math.max(size.x,size.y,size.z);
+  if(!Number.isFinite(longest)||longest<=0){disposeObject(object);window.guessModelFailed?.(g);return}
+  const scale=3.05/longest;
+  object.position.sub(center);
+  const model=new T.Group();model.add(object);model.scale.setScalar(scale);a.model=model;a.scene.add(model);
+  floor.position.y=-size.y*scale/2-.04;
+  model.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;for(const m of(Array.isArray(o.material)?o.material:[o.material])){if(m.map)m.map.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy())}}});
+  a.caption.textContent='REAL OBJECT  /  LOOK CLOSELY';
+  window.guessModelReady?.(g);
+ },undefined,error=>{
+  if(active!==a)return;
+  console.warn('Real object failed to load:',g.item.id,error);
+  a.caption.textContent='OBJECT UNAVAILABLE';window.guessModelFailed?.(g);
+ });
+}
 function ensureRenderer(){
  if(renderer)return true;if(failed)return false;
  try{renderer=new T.WebGLRenderer({antialias:true,alpha:false,powerPreference:'high-performance'});renderer.setPixelRatio(Math.min(devicePixelRatio||1,1.5));renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFShadowMap;renderer.outputColorSpace=T.SRGBColorSpace;renderer.toneMapping=T.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;
@@ -28,9 +57,9 @@ function ensureRenderer(){
 function unmount(){if(!active)return;if(active.kind==='puzzle')for(const item of active.items)puzzlePositions.set(item.id,item.mesh.position.clone());active.source.classList.remove('nv3d-source');active.source.removeAttribute('aria-hidden');if(active.kind==='fish'&&active.host.isConnected)active.host.before(active.source);active.host.remove();active.picture?.dispose();active.tileMaps?.forEach(({map})=>map.dispose());active.scene.traverse(o=>o.shadow?.dispose());disposeObject(active.scene);active=null}
 function sourceNow(){if(typeof window.neuroState!=="function")return null;const s=window.neuroState();if(!s.game||s.game==='fish')return null;const selectors={memory:'.memory-board',puzzle:'.puzzle-board',pattern:'.echo-board',guess:'#guess-object'};const source=document.querySelector(selectors[s.game]||'__none');return source?{source,kind:s.game}:null}
 function mount(source,kind){
- unmount();if(!ensureRenderer())return;
+ unmount();if(!ensureRenderer()){if(kind==='guess')window.guessModelFailed?.(window.neuroState().guess,'This game needs WebGL to show realistic 3D objects. Enable graphics acceleration and reload.');return}
  const host=document.createElement('div');host.className='nv3d-host nv3d-'+kind;
- const caption=document.createElement('div');caption.className='nv3d-caption';caption.textContent=kind==='pattern'?'COLOR STUDIO  /  WATCH, THEN REPEAT':kind==='puzzle'?'3D SLIDER  /  TAP A NEIGHBOURING TILE':kind==='memory'?'3D COLLECTION  /  REMEMBER EACH OBJECT':'3D OBJECT  /  LOOK CLOSELY';
+ const caption=document.createElement('div');caption.className='nv3d-caption';caption.textContent=kind==='pattern'?'COLOR STUDIO  /  WATCH, THEN REPEAT':kind==='puzzle'?'3D SLIDER  /  TAP A NEIGHBOURING TILE':kind==='memory'?'3D COLLECTION  /  REMEMBER EACH OBJECT':'LOADING REAL OBJECT';
  const live=document.createElement('span');live.className='nv3d-live';live.setAttribute('aria-live','polite');
  host.append(renderer.domElement,caption,live);source.before(host);
  renderer.domElement.style.filter='';
@@ -47,8 +76,7 @@ function mount(source,kind){
 function buildBoard(a){
  const state=window.neuroState(),kind=a.kind;
  if(kind==='guess'){
-  const m=objectModel(state.guess.item.answer);m.scale.setScalar(1.6);a.scene.add(m);a.model=m;
-  themedSurface(a,box(a.scene,'#ffffff',[0,-1.7,-.2],[7,.12,5]),'floor');return;
+  loadRealObject(a,state.guess);return;
  }
  const count=kind==='memory'?state.memory.items.length:kind==='puzzle'?state.puzzle.board.length:state.pattern.size**2;
  const cols=kind==='memory'?4:Math.sqrt(count),rows=Math.ceil(count/cols),step=2;
@@ -75,7 +103,6 @@ function buildBoard(a){
     glint=label(tile,'✦',0,.38,.7);glint.position.z=.30;glint.visible=false;
    }
    if(picture){const map=new T.Texture();map.source=picture.source;map.colorSpace=T.SRGBColorSpace;map.repeat.set(1/cols,1/cols);map.offset.set(((n-1)%cols)/cols,1-(Math.floor((n-1)/cols)+1)/cols);if(map.image)map.needsUpdate=true;const face=new T.Mesh(new T.PlaneGeometry(1.64,1.64),new T.MeshStandardMaterial({map:map.image?map:null,roughness:.6}));face.position.z=.223;tile.add(face);maps.push({map,face})}
-   const number=label(tile,String(n),0,kind==='pattern'?-.12:-.55,kind==='pattern'?1.65:.9,kind==='pattern'?'#172a42':undefined);number.position.z=kind==='pattern'?.29:.25;
    tile.userData.cell=i;const item={id:n,mesh:tile,face,glint,x,y,cell:i};a.items.push(item);
    if(kind==='puzzle'&&puzzlePositions.has(n)&&state.puzzle.moves>0)tile.position.copy(puzzlePositions.get(n));
   }
@@ -92,7 +119,8 @@ function update(time){
   const next=sourceNow();if(!next){unmount();return}if(!active||active.source!==next.source||active.kind!==next.kind)mount(next.source,next.kind);if(!active)return;
   const a=active,state=window.neuroState();resize();a.time=time/1000;
   if(a.kind==='guess'){
-   a.model.rotation.y=Math.sin(time/1800)*.65;const g=state.guess,blur=g.phase==='active'?Math.max(0,28*(1-(Date.now()-g.started)/g.duration)):0;renderer.domElement.style.filter=`blur(${blur}px)`;
+   if(a.model)a.model.rotation.y=Math.sin(time/6500)*.6;
+   const g=state.guess,blur=g.phase==='loading'?g.blur:g.phase==='active'?Math.max(0,g.blur*(1-(Date.now()-g.started)/g.duration)):0;renderer.domElement.style.filter=`blur(${blur}px)`;
   }else{
    renderer.domElement.style.filter='';
    for(const item of a.items){if(a.kind==='memory'){item.mesh.rotation.y=-.22+Math.sin(time/1600+item.x)*.1;continue}

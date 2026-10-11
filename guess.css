@@ -1,0 +1,6 @@
+.guess-asset-credit{font-size:10px;line-height:1.6;color:var(--muted);text-align:center;margin:18px 0 0}
+.guess-asset-credit a{color:inherit;text-underline-offset:3px}
+.real-object{font-size:inherit;min-height:280px}
+.nv3d-guess{height:380px}
+#guess-load-status{min-height:2.5em}
+@media(max-width:760px){.nv3d-guess{height:300px}.real-object{min-height:240px}}

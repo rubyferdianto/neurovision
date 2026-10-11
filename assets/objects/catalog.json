@@ -1,0 +1,615 @@
+[
+  {
+    "id": "food_apple_01",
+    "label": "Apple",
+    "category": "food",
+    "aliases": [
+      "apple"
+    ],
+    "tier": 1,
+    "model": "assets/objects/food_apple_01/model.gltf",
+    "source": "https://polyhaven.com/a/food_apple_01",
+    "bytes": 473812
+  },
+  {
+    "id": "bananas",
+    "label": "Bananas",
+    "category": "food",
+    "aliases": [
+      "banana"
+    ],
+    "tier": 1,
+    "model": "assets/objects/bananas/model.gltf",
+    "source": "https://polyhaven.com/a/bananas",
+    "bytes": 2479500
+  },
+  {
+    "id": "lemon",
+    "label": "Lemon",
+    "category": "food",
+    "aliases": [
+      "lemon"
+    ],
+    "tier": 1,
+    "model": "assets/objects/lemon/model.gltf",
+    "source": "https://polyhaven.com/a/lemon",
+    "bytes": 1851844
+  },
+  {
+    "id": "football",
+    "label": "Football",
+    "category": "sport",
+    "aliases": [
+      "soccer ball",
+      "football",
+      "ball"
+    ],
+    "tier": 1,
+    "model": "assets/objects/football/model.gltf",
+    "source": "https://polyhaven.com/a/football",
+    "bytes": 2762037
+  },
+  {
+    "id": "baseball_01",
+    "label": "Baseball",
+    "category": "sport",
+    "aliases": [
+      "baseball"
+    ],
+    "tier": 1,
+    "model": "assets/objects/baseball_01/model.gltf",
+    "source": "https://polyhaven.com/a/baseball_01",
+    "bytes": 1079490
+  },
+  {
+    "id": "yellow_onion",
+    "label": "Onion",
+    "category": "food",
+    "aliases": [
+      "onion"
+    ],
+    "tier": 1,
+    "model": "assets/objects/yellow_onion/model.gltf",
+    "source": "https://polyhaven.com/a/yellow_onion",
+    "bytes": 1805401
+  },
+  {
+    "id": "wooden_spoon",
+    "label": "Wooden spoon",
+    "category": "kitchen",
+    "aliases": [
+      "spoon",
+      "wooden spoon"
+    ],
+    "tier": 1,
+    "model": "assets/objects/wooden_spoon/model.gltf",
+    "source": "https://polyhaven.com/a/wooden_spoon",
+    "bytes": 1974577
+  },
+  {
+    "id": "croissant",
+    "label": "Croissant",
+    "category": "food",
+    "aliases": [
+      "croissant"
+    ],
+    "tier": 1,
+    "model": "assets/objects/croissant/model.gltf",
+    "source": "https://polyhaven.com/a/croissant",
+    "bytes": 2098773
+  },
+  {
+    "id": "food_avocado_01",
+    "label": "Avocado",
+    "category": "food",
+    "aliases": [
+      "avocado"
+    ],
+    "tier": 2,
+    "model": "assets/objects/food_avocado_01/model.gltf",
+    "source": "https://polyhaven.com/a/food_avocado_01",
+    "bytes": 585169
+  },
+  {
+    "id": "food_kiwi_01",
+    "label": "Kiwi",
+    "category": "food",
+    "aliases": [
+      "kiwi",
+      "kiwi fruit"
+    ],
+    "tier": 2,
+    "model": "assets/objects/food_kiwi_01/model.gltf",
+    "source": "https://polyhaven.com/a/food_kiwi_01",
+    "bytes": 794646
+  },
+  {
+    "id": "food_pomegranate_01",
+    "label": "Pomegranate",
+    "category": "food",
+    "aliases": [
+      "pomegranate"
+    ],
+    "tier": 2,
+    "model": "assets/objects/food_pomegranate_01/model.gltf",
+    "source": "https://polyhaven.com/a/food_pomegranate_01",
+    "bytes": 610846
+  },
+  {
+    "id": "food_ginger_01",
+    "label": "Ginger",
+    "category": "food",
+    "aliases": [
+      "ginger"
+    ],
+    "tier": 2,
+    "model": "assets/objects/food_ginger_01/model.gltf",
+    "source": "https://polyhaven.com/a/food_ginger_01",
+    "bytes": 586792
+  },
+  {
+    "id": "lightbulb_01",
+    "label": "Light bulb",
+    "category": "household",
+    "aliases": [
+      "light bulb",
+      "lightbulb",
+      "bulb"
+    ],
+    "tier": 2,
+    "model": "assets/objects/lightbulb_01/model.gltf",
+    "source": "https://polyhaven.com/a/lightbulb_01",
+    "bytes": 1042696
+  },
+  {
+    "id": "jug_01",
+    "label": "Jug",
+    "category": "kitchen",
+    "aliases": [
+      "jug",
+      "pitcher"
+    ],
+    "tier": 2,
+    "model": "assets/objects/jug_01/model.gltf",
+    "source": "https://polyhaven.com/a/jug_01",
+    "bytes": 1227735
+  },
+  {
+    "id": "wooden_bowl_01",
+    "label": "Wooden bowl",
+    "category": "kitchen",
+    "aliases": [
+      "bowl",
+      "wooden bowl"
+    ],
+    "tier": 2,
+    "model": "assets/objects/wooden_bowl_01/model.gltf",
+    "source": "https://polyhaven.com/a/wooden_bowl_01",
+    "bytes": 1823237
+  },
+  {
+    "id": "watering_can_metal_01",
+    "label": "Watering can",
+    "category": "garden",
+    "aliases": [
+      "watering can"
+    ],
+    "tier": 2,
+    "model": "assets/objects/watering_can_metal_01/model.gltf",
+    "source": "https://polyhaven.com/a/watering_can_metal_01",
+    "bytes": 2611187
+  },
+  {
+    "id": "Camera_01",
+    "label": "Camera",
+    "category": "electronics",
+    "aliases": [
+      "camera"
+    ],
+    "tier": 3,
+    "model": "assets/objects/Camera_01/model.gltf",
+    "source": "https://polyhaven.com/a/Camera_01",
+    "bytes": 2439882
+  },
+  {
+    "id": "gamepad",
+    "label": "Game controller",
+    "category": "electronics",
+    "aliases": [
+      "gamepad",
+      "controller",
+      "game controller"
+    ],
+    "tier": 3,
+    "model": "assets/objects/gamepad/model.gltf",
+    "source": "https://polyhaven.com/a/gamepad",
+    "bytes": 1320822
+  },
+  {
+    "id": "binoculars",
+    "label": "Binoculars",
+    "category": "optics",
+    "aliases": [
+      "binoculars"
+    ],
+    "tier": 3,
+    "model": "assets/objects/binoculars/model.gltf",
+    "source": "https://polyhaven.com/a/binoculars",
+    "bytes": 1950923
+  },
+  {
+    "id": "vintage_electric_kettle",
+    "label": "Kettle",
+    "category": "kitchen",
+    "aliases": [
+      "kettle",
+      "electric kettle"
+    ],
+    "tier": 3,
+    "model": "assets/objects/vintage_electric_kettle/model.gltf",
+    "source": "https://polyhaven.com/a/vintage_electric_kettle",
+    "bytes": 2387109
+  },
+  {
+    "id": "alarm_clock_01",
+    "label": "Alarm clock",
+    "category": "time",
+    "aliases": [
+      "clock",
+      "alarm clock"
+    ],
+    "tier": 3,
+    "model": "assets/objects/alarm_clock_01/model.gltf",
+    "source": "https://polyhaven.com/a/alarm_clock_01",
+    "bytes": 1657651
+  },
+  {
+    "id": "vintage_suitcase",
+    "label": "Suitcase",
+    "category": "travel",
+    "aliases": [
+      "suitcase",
+      "luggage"
+    ],
+    "tier": 3,
+    "model": "assets/objects/vintage_suitcase/model.gltf",
+    "source": "https://polyhaven.com/a/vintage_suitcase",
+    "bytes": 4294734
+  },
+  {
+    "id": "rubber_boots",
+    "label": "Rubber boots",
+    "category": "clothing",
+    "aliases": [
+      "boots",
+      "rubber boots",
+      "wellingtons"
+    ],
+    "tier": 3,
+    "model": "assets/objects/rubber_boots/model.gltf",
+    "source": "https://polyhaven.com/a/rubber_boots",
+    "bytes": 2012425
+  },
+  {
+    "id": "fishermans_hat",
+    "label": "Bucket hat",
+    "category": "clothing",
+    "aliases": [
+      "hat",
+      "bucket hat",
+      "fisherman hat"
+    ],
+    "tier": 3,
+    "model": "assets/objects/fishermans_hat/model.gltf",
+    "source": "https://polyhaven.com/a/fishermans_hat",
+    "bytes": 2339689
+  },
+  {
+    "id": "pocket_watch",
+    "label": "Pocket watch",
+    "category": "time",
+    "aliases": [
+      "pocket watch",
+      "watch"
+    ],
+    "tier": 4,
+    "model": "assets/objects/pocket_watch/model.gltf",
+    "source": "https://polyhaven.com/a/pocket_watch",
+    "bytes": 2077362
+  },
+  {
+    "id": "magnifying_glass_01",
+    "label": "Magnifying glass",
+    "category": "optics",
+    "aliases": [
+      "magnifying glass",
+      "magnifier"
+    ],
+    "tier": 4,
+    "model": "assets/objects/magnifying_glass_01/model.gltf",
+    "source": "https://polyhaven.com/a/magnifying_glass_01",
+    "bytes": 466908
+  },
+  {
+    "id": "measuring_tape_01",
+    "label": "Tape measure",
+    "category": "tools",
+    "aliases": [
+      "tape measure",
+      "measuring tape"
+    ],
+    "tier": 4,
+    "model": "assets/objects/measuring_tape_01/model.gltf",
+    "source": "https://polyhaven.com/a/measuring_tape_01",
+    "bytes": 445979
+  },
+  {
+    "id": "vintage_stapler",
+    "label": "Stapler",
+    "category": "office",
+    "aliases": [
+      "stapler"
+    ],
+    "tier": 4,
+    "model": "assets/objects/vintage_stapler/model.gltf",
+    "source": "https://polyhaven.com/a/vintage_stapler",
+    "bytes": 2321764
+  },
+  {
+    "id": "adjustable_wrench",
+    "label": "Adjustable wrench",
+    "category": "tools",
+    "aliases": [
+      "adjustable wrench",
+      "wrench",
+      "spanner"
+    ],
+    "tier": 4,
+    "model": "assets/objects/adjustable_wrench/model.gltf",
+    "source": "https://polyhaven.com/a/adjustable_wrench",
+    "bytes": 2642182
+  },
+  {
+    "id": "screwdriver",
+    "label": "Screwdriver",
+    "category": "tools",
+    "aliases": [
+      "screwdriver"
+    ],
+    "tier": 4,
+    "model": "assets/objects/screwdriver/model.gltf",
+    "source": "https://polyhaven.com/a/screwdriver",
+    "bytes": 1536547
+  },
+  {
+    "id": "pliers",
+    "label": "Pliers",
+    "category": "tools",
+    "aliases": [
+      "pliers"
+    ],
+    "tier": 4,
+    "model": "assets/objects/pliers/model.gltf",
+    "source": "https://polyhaven.com/a/pliers",
+    "bytes": 2016360
+  },
+  {
+    "id": "cross_pein_hammer",
+    "label": "Hammer",
+    "category": "tools",
+    "aliases": [
+      "hammer"
+    ],
+    "tier": 4,
+    "model": "assets/objects/cross_pein_hammer/model.gltf",
+    "source": "https://polyhaven.com/a/cross_pein_hammer",
+    "bytes": 1508699
+  },
+  {
+    "id": "seadogs_compass",
+    "label": "Compass",
+    "category": "instruments",
+    "aliases": [
+      "compass"
+    ],
+    "tier": 5,
+    "model": "assets/objects/seadogs_compass/model.gltf",
+    "source": "https://polyhaven.com/a/seadogs_compass",
+    "bytes": 2695701
+  },
+  {
+    "id": "brass_blowtorch",
+    "label": "Blowtorch",
+    "category": "tools",
+    "aliases": [
+      "blowtorch",
+      "blow torch"
+    ],
+    "tier": 5,
+    "model": "assets/objects/brass_blowtorch/model.gltf",
+    "source": "https://polyhaven.com/a/brass_blowtorch",
+    "bytes": 2328425
+  },
+  {
+    "id": "bunsen_burner",
+    "label": "Bunsen burner",
+    "category": "instruments",
+    "aliases": [
+      "bunsen burner",
+      "burner"
+    ],
+    "tier": 5,
+    "model": "assets/objects/bunsen_burner/model.gltf",
+    "source": "https://polyhaven.com/a/bunsen_burner",
+    "bytes": 2133510
+  },
+  {
+    "id": "vintage_microscope",
+    "label": "Microscope",
+    "category": "optics",
+    "aliases": [
+      "microscope"
+    ],
+    "tier": 5,
+    "model": "assets/objects/vintage_microscope/model.gltf",
+    "source": "https://polyhaven.com/a/vintage_microscope",
+    "bytes": 2312802
+  },
+  {
+    "id": "hand_plane_no4",
+    "label": "Hand plane",
+    "category": "tools",
+    "aliases": [
+      "hand plane",
+      "wood plane",
+      "plane"
+    ],
+    "tier": 5,
+    "model": "assets/objects/hand_plane_no4/model.gltf",
+    "source": "https://polyhaven.com/a/hand_plane_no4",
+    "bytes": 2552214
+  },
+  {
+    "id": "retro_multimeter",
+    "label": "Multimeter",
+    "category": "instruments",
+    "aliases": [
+      "multimeter",
+      "volt meter",
+      "voltmeter"
+    ],
+    "tier": 5,
+    "model": "assets/objects/retro_multimeter/model.gltf",
+    "source": "https://polyhaven.com/a/retro_multimeter",
+    "bytes": 1393330
+  },
+  {
+    "id": "filmstrip_projector_8mm",
+    "label": "Film projector",
+    "category": "electronics",
+    "aliases": [
+      "projector",
+      "film projector"
+    ],
+    "tier": 5,
+    "model": "assets/objects/filmstrip_projector_8mm/model.gltf",
+    "source": "https://polyhaven.com/a/filmstrip_projector_8mm",
+    "bytes": 3121515
+  },
+  {
+    "id": "cassette_player",
+    "label": "Cassette player",
+    "category": "electronics",
+    "aliases": [
+      "cassette player",
+      "tape player"
+    ],
+    "tier": 5,
+    "model": "assets/objects/cassette_player/model.gltf",
+    "source": "https://polyhaven.com/a/cassette_player",
+    "bytes": 944682
+  },
+  {
+    "id": "Ukulele_01",
+    "label": "Ukulele",
+    "category": "music",
+    "aliases": [
+      "ukulele",
+      "uke"
+    ],
+    "tier": 6,
+    "model": "assets/objects/Ukulele_01/model.gltf",
+    "source": "https://polyhaven.com/a/Ukulele_01",
+    "bytes": 807270
+  },
+  {
+    "id": "Lantern_01",
+    "label": "Lantern",
+    "category": "household",
+    "aliases": [
+      "lantern"
+    ],
+    "tier": 6,
+    "model": "assets/objects/Lantern_01/model.gltf",
+    "source": "https://polyhaven.com/a/Lantern_01",
+    "bytes": 1420416
+  },
+  {
+    "id": "chess_set",
+    "label": "Chess set",
+    "category": "games",
+    "aliases": [
+      "chess",
+      "chess set"
+    ],
+    "tier": 6,
+    "model": "assets/objects/chess_set/model.gltf",
+    "source": "https://polyhaven.com/a/chess_set",
+    "bytes": 6983829
+  },
+  {
+    "id": "circuit_board",
+    "label": "Circuit board",
+    "category": "electronics",
+    "aliases": [
+      "circuit board",
+      "pcb"
+    ],
+    "tier": 6,
+    "model": "assets/objects/circuit_board/model.gltf",
+    "source": "https://polyhaven.com/a/circuit_board",
+    "bytes": 3288693
+  },
+  {
+    "id": "life_jacket",
+    "label": "Life jacket",
+    "category": "travel",
+    "aliases": [
+      "life jacket",
+      "life vest"
+    ],
+    "tier": 6,
+    "model": "assets/objects/life_jacket/model.gltf",
+    "source": "https://polyhaven.com/a/life_jacket",
+    "bytes": 2325670
+  },
+  {
+    "id": "Megaphone_01",
+    "label": "Megaphone",
+    "category": "electronics",
+    "aliases": [
+      "megaphone",
+      "bullhorn"
+    ],
+    "tier": 6,
+    "model": "assets/objects/Megaphone_01/model.gltf",
+    "source": "https://polyhaven.com/a/Megaphone_01",
+    "bytes": 776159
+  },
+  {
+    "id": "dustpan",
+    "label": "Dustpan",
+    "category": "household",
+    "aliases": [
+      "dustpan",
+      "dust pan"
+    ],
+    "tier": 6,
+    "model": "assets/objects/dustpan/model.gltf",
+    "source": "https://polyhaven.com/a/dustpan",
+    "bytes": 2275983
+  },
+  {
+    "id": "Barrel_01",
+    "label": "Barrel",
+    "category": "household",
+    "aliases": [
+      "barrel",
+      "cask"
+    ],
+    "tier": 6,
+    "model": "assets/objects/Barrel_01/model.gltf",
+    "source": "https://polyhaven.com/a/Barrel_01",
+    "bytes": 692947
+  }
+]
