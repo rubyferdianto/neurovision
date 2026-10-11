@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "node tests/fish.test.cjs && node tests/three.test.mjs",
+    "test": "node tests/fish.test.cjs && node tests/three.test.mjs && node tests/pattern.test.cjs",
     "serve": "python -m http.server 8080"
   },
   "repository": {

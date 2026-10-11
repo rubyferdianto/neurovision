@@ -1,0 +1,25 @@
+.echo-intro-art{display:flex;justify-content:center;gap:12px;margin:28px auto 38px;perspective:500px}
+.echo-intro-art i{width:42px;height:42px;background:var(--tile-color);border:4px solid #ffffff66;border-radius:10px;box-shadow:0 8px 0 color-mix(in srgb,var(--tile-color),#233048 48%),0 14px 16px #17294625;transform:rotate(-10deg) translateY(calc(var(--tile-order)*-3px))}
+.echo-progress{display:flex;justify-content:center;gap:7px;margin:18px auto 0;flex-wrap:wrap}
+.echo-step{width:26px;height:26px;border-radius:9px;background:#e9edf1;border:2px solid transparent;color:#637284;font:700 11px/22px Manrope,sans-serif;font-style:normal;transition:background .18s,transform .18s}
+.echo-step.current{border-color:#8c70d5;background:#ede5ff;color:#614c9e}
+.echo-step.complete{background:var(--step-color);color:#162a37;transform:translateY(-3px);box-shadow:0 3px 0 #283e5126}
+.echo-color-board{width:min(100%,430px);gap:14px;margin:24px auto;padding:18px;border:10px solid #30364e;border-radius:20px;background:#20253b;box-shadow:0 10px 0 #14192b,0 24px 40px #18203730}
+.echo-color-board .echo-cell{position:relative;aspect-ratio:1;border:3px solid #ffffff4d;border-bottom-color:#0002;border-radius:10px;background:var(--tile-color);color:#192a42;box-shadow:0 7px 0 color-mix(in srgb,var(--tile-color),#152236 48%),0 11px 12px #0005;font:800 clamp(15px,3vw,24px) Manrope,sans-serif;transition:transform .15s,filter .15s,box-shadow .15s;opacity:1}
+.echo-color-board .echo-cell i{position:absolute;left:50%;top:12%;font-style:normal;font-size:16px;opacity:0;transform:translateX(-50%)}
+.echo-color-board .echo-cell.lit{background:var(--tile-color);filter:brightness(1.45);transform:translateY(-5px);border-color:#fff;box-shadow:0 10px 0 color-mix(in srgb,var(--tile-color),#152236 40%),0 0 24px var(--tile-color)}
+.echo-color-board .echo-cell.lit i{opacity:1}
+.echo-color-board .echo-cell.correct{background:var(--tile-color);transform:translateY(5px);filter:brightness(1.25);box-shadow:0 2px 0 #15223666}
+.echo-color-board .echo-cell.miss{background:#f65e7d;filter:saturate(.5);border-color:#fff;animation:shake .2s linear 2}
+.echo-color-board .echo-cell:focus-visible{outline:3px solid white;outline-offset:3px}
+.echo-actions{gap:10px;flex-wrap:wrap;margin:28px 0 18px}.echo-actions .stage-button{margin:0;min-width:155px}
+.echo-options{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.echo-option{border:1px solid #d8dce6;border-radius:20px;padding:8px 12px;background:#f8f9fb;color:#53617a;font:600 11px Manrope,sans-serif;cursor:pointer}
+.echo-option[aria-pressed=true]{background:#eee4ff;border-color:#b59adf;color:#705099}
+.echo-hint{font-size:10px;color:#7b8793;margin:15px 0 0}
+.echo-win-art{display:grid;place-items:center;width:88px;height:88px;margin:20px auto;border-radius:24px;background:linear-gradient(145deg,#ffdc85,#fa8ead 60%,#bc91ef);color:#fff;font-size:52px;box-shadow:0 10px 0 #b5789955,0 24px 35px #b578991f;animation:winpop .5s ease-out}
+.theme-luma .echo-step:not(.complete){background:#2d3041;color:#c2c7db}.theme-luma .echo-step.current{border-color:#bf9cf2;background:#443659}.theme-luma .echo-option{background:#272736;border-color:#46445c;color:#cec9df}.theme-luma .echo-option[aria-pressed=true]{background:#483656;border-color:#a07bc1;color:#f1dfff}.theme-luma .echo-hint{color:#a5a4b5}
+.card-art.pattern,.theme-luma .card-art.pattern{background:radial-gradient(ellipse at 80% 20%,#e7d0ff,transparent 75%),#daf2f1}
+.pattern-preview i:nth-child(3n+1),.theme-luma .pattern-preview i:nth-child(3n+1){background:#fa83a2}.pattern-preview i:nth-child(3n+2),.theme-luma .pattern-preview i:nth-child(3n+2){background:#ffc966}.pattern-preview i:nth-child(3n),.theme-luma .pattern-preview i:nth-child(3n){background:#7fcfc3}.pattern-preview i,.theme-luma .pattern-preview i{border:2px solid #ffffff66;border-radius:6px;box-shadow:0 4px 0 #31344955}.pattern-preview i.on,.theme-luma .pattern-preview i.on{filter:brightness(1.2);box-shadow:0 4px 0 #31344955,0 0 15px #fff}
+@media(max-width:760px){.echo-progress{gap:5px}.echo-step{width:22px;height:22px;line-height:18px;font-size:10px}.echo-color-board{border-width:10px;padding:12px;gap:10px}.echo-options{gap:7px}.echo-option{font-size:10px;padding:8px 10px}}
+@media(prefers-reduced-motion:reduce){.echo-step,.echo-color-board .echo-cell{transition:none}.echo-win-art{animation:none}}

@@ -8,6 +8,14 @@ export function shape(group,geometry,color,pos=[0,0,0],scale=[1,1,1],extra={}){
 }
 export function ball(g,c,p=[0,0,0],s=[1,1,1],extra={}){return shape(g,new T.SphereGeometry(1,20,14),c,p,s,extra)}
 export function box(g,c,p,s){return shape(g,new T.BoxGeometry(...s),c,p)}
+// A real chamfer catches the key light along the square edges.
+export function bevelBox(g,c,p,s,bevel=.06){
+ const outline=new T.Shape(),x=s[0]/2-bevel,y=s[1]/2-bevel;
+ outline.moveTo(-x,-y);outline.lineTo(x,-y);outline.lineTo(x,y);outline.lineTo(-x,y);outline.closePath();
+ const geometry=new T.ExtrudeGeometry(outline,{depth:s[2]-bevel*2,bevelEnabled:true,bevelThickness:bevel,bevelSize:bevel,bevelSegments:3,steps:1});
+ geometry.translate(0,0,-s[2]/2+bevel);
+ return shape(g,geometry,c,p);
+}
 export function tube(g,c,points,r=.04){return shape(g,new T.TubeGeometry(new T.CatmullRomCurve3(points.map(p=>new T.Vector3(...p))),24,r,7,false),c)}
 export function ring(g,c,p,r=.45,thickness=.1){return shape(g,new T.TorusGeometry(r,thickness,10,32),c,p)}
 function cylinder(g,c,p,top,bottom,height){return shape(g,new T.CylinderGeometry(top,bottom,height,24),c,p)}

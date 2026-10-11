@@ -3,7 +3,7 @@ const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/st
 const noop=()=>{},gradient={addColorStop:noop};
 const ctx=new Proxy({createLinearGradient:()=>gradient,createRadialGradient:()=>gradient},{get:(o,k)=>k in o?o[k]:noop,set:(o,k,v)=>(o[k]=v,true)});
 const elements={};const element=id=>elements[id]??={textContent:'',classList:{toggle:noop}};
-const s={console,Math,Image:class{complete=true;naturalWidth=1600;naturalHeight=900},Path2D:class{moveTo(){}bezierCurveTo(){}lineTo(){}quadraticCurveTo(){}},games:{},data:{},app:{runRounds:0},window:{renderHome:noop},document:{querySelector:element,querySelectorAll:()=>[]},content:{querySelector:element},requestAnimationFrame:()=>1,cancelAnimationFrame:noop,ctx,assert};
+const s={console,Math,Image:class{complete=true;naturalWidth=1600;naturalHeight=900},Path2D:class{moveTo(){}bezierCurveTo(){}lineTo(){}quadraticCurveTo(){}},games:{},data:{},app:{runRounds:0},window:{renderHome:noop},document:{querySelector:element,querySelectorAll:()=>[],createElement:()=>({getContext:()=>new Proxy({createLinearGradient:()=>gradient},{get:(o,k)=>k in o?o[k]:noop,set:(o,k,v)=>(o[k]=v,true)})})},content:{querySelector:element},requestAnimationFrame:()=>1,cancelAnimationFrame:noop,ctx,assert};
 vm.createContext(s);vm.runInContext(fs.readFileSync('fish-ocean.js','utf8')+'\n'+fs.readFileSync('fish.js','utf8'),s);
 vm.runInContext(`
 assert.equal(fishLevelDuration(1),180);assert.equal(fishLevelDuration(10),360);
@@ -33,12 +33,12 @@ for(const side of [-1,1]){
  g.ambush.x=side===1?-250:g.width+250;updateFishAmbush(g,.016);assert.equal(g.score,0,'no dodge reward after hit');assert.equal(g.ambush,null);
  g=setup();g.player.y=50;g.ambush={phase:'charge',x:side===1?-250:g.width+250,y:250,r:80,side,hit:false};updateFishAmbush(g,.016);assert.equal(g.score,150);assert.equal(g.dodges,1);assert.equal(g.ambush,null);assert.ok(g.ambushIn>=6);
 }
-let rendered=[];ctx.drawImage=(sprite)=>rendered.push(sprite);drawLivingFish(ctx,0,0,28,{hero:true});assert.ok(rendered.every(sprite=>sprite===tunaPhoto),'player uses tuna');rendered=[];drawLivingFish(ctx,0,0,80,{monster:true});assert.ok(rendered.every(sprite=>sprite===monsterPhoto),'monster has distinct sprite');ctx.drawImage=()=>{};
+let rendered=[];ctx.drawImage=(sprite)=>rendered.push(sprite);drawLivingFish(ctx,0,0,28,{hero:true});assert.ok(rendered.every(sprite=>sprite===tunaPhoto||sprite===fishLighting.get(tunaPhoto).canvas),'player uses tuna');rendered=[];drawLivingFish(ctx,0,0,80,{monster:true});assert.ok(rendered.every(sprite=>sprite===monsterPhoto||sprite===fishLighting.get(monsterPhoto).canvas),'monster has distinct sprite');ctx.drawImage=()=>{};
 g=setup();const types=new Set();for(let i=0;i<3;i++){beginFishAmbush(g);types.add(g.ambush.type)}assert.equal(types.size,3,'all creatures appear in each shuffled cycle');
 for(const type of ['shark','whale']){
  g=setup();g.player.y=50;g.ambush={type,phase:'charge',x:-400,y:250,r:100,side:1,hit:false};updateFishAmbush(g,.016);assert.equal(g.score,fishMonsterTypes[type].bonus);assert.equal(g.ambush,null);
  g=setup();g.ambush={type,phase:'charge',x:270,y:250,r:100,side:1,hit:false};updateFishAmbush(g,.016);assert.equal(g.hearts,2);updateFishAmbush(g,.016);assert.equal(g.hearts,2);
- rendered=[];ctx.drawImage=(sprite)=>rendered.push(sprite);drawLivingFish(ctx,0,0,100,{monster:true,monsterType:type});assert.ok(rendered.every(sprite=>sprite===(type==='shark'?sharkPhoto:whalePhoto)));ctx.drawImage=()=>{};
+ rendered=[];ctx.drawImage=(sprite)=>rendered.push(sprite);drawLivingFish(ctx,0,0,100,{monster:true,monsterType:type});assert.ok(rendered.every(sprite=>sprite===(type==='shark'?sharkPhoto:whalePhoto)||sprite===fishLighting.get(type==='shark'?sharkPhoto:whalePhoto).canvas));ctx.drawImage=()=>{};
 }
 for(const width of [360,1120]){g=setup(width);g.spawnIn=0;for(let i=1;i<=1200;i++){g.hearts=3;fishFrame(g,i*16);assert.ok(Number.isFinite(g.player.y+g.player.drawSize));assert.ok(g.effects.length<20)}}
 `,s);

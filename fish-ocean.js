@@ -4,7 +4,24 @@ const tunaPhoto=new Image();tunaPhoto.src="assets/tuna.png";
 const monsterPhoto=new Image();monsterPhoto.src="assets/monster.png";
 const reefPhoto=new Image();reefPhoto.src="assets/reef.png";
 const snapperPhoto=new Image();snapperPhoto.src="assets/snapper.png";
-/* Procedural reef rendering: all animation uses the game's clock. */
+/* Photographic reef with body deformation, moving caustics and layered depth. */
+const fishLighting=new WeakMap();
+function illuminatedFish(sprite,time){
+  let layer=fishLighting.get(sprite);
+  if(!layer){const canvas=document.createElement('canvas');canvas.width=512;canvas.height=Math.round(512*sprite.naturalHeight/sprite.naturalWidth);layer={canvas,ctx:canvas.getContext('2d'),frame:-1};fishLighting.set(sprite,layer)}
+  const frame=Math.floor(time*10);if(layer.frame===frame)return layer.canvas;
+  layer.frame=frame;const c=layer.ctx,w=layer.canvas.width,h=layer.canvas.height;
+  c.clearRect(0,0,w,h);c.globalCompositeOperation='source-over';c.drawImage(sprite,0,0,w,h);
+  // All lighting is masked to the transparent fish silhouette, including its fins.
+  c.globalCompositeOperation='source-atop';
+  const shade=c.createLinearGradient(0,0,0,h);shade.addColorStop(0,'#051a3548');shade.addColorStop(.28,'#d5faff18');shade.addColorStop(.55,'#b5f4ff08');shade.addColorStop(1,'#03182d50');c.fillStyle=shade;c.fillRect(0,0,w,h);
+  c.strokeStyle='#dcffff24';c.lineWidth=w*.007;
+  for(let i=-1;i<7;i++){
+    const x=i*w/6+Math.sin(time*.7+i)*w*.025;
+    c.beginPath();c.moveTo(x,0);c.bezierCurveTo(x+w*.12,h*.25,x-w*.09,h*.45,x+w*.19,h);c.stroke();
+  }
+  c.globalCompositeOperation='source-over';return layer.canvas;
+}
 const reefSpecies = [
   {back:'#164c60',side:'#56a6b0',belly:'#d2e5d4',fin:'#609c98',depth:.58,pattern:'scales'},
   {back:'#805323',side:'#dbb65d',belly:'#eee1af',fin:'#c89842',depth:.67,pattern:'bars'},
@@ -20,12 +37,20 @@ function drawLivingFish(ctx,x,y,r,options={}){
   ctx.save();ctx.translate(x,y);ctx.rotate(tilt);if(flip)ctx.scale(-1,1);ctx.scale(r,r);
   const sprite=hero?tunaPhoto:monster?(monsterType==="shark"?sharkPhoto:monsterType==="whale"?whalePhoto:monsterPhoto):snapperPhoto;
   if(sprite.complete&&sprite.naturalWidth){
-    const iw=sprite.naturalWidth,ih=sprite.naturalHeight;
+    const texture=hero||monster?illuminatedFish(sprite,time):sprite;
+    const iw=texture.naturalWidth||texture.width,ih=texture.naturalHeight||texture.height;
+    const bodyHeight=(monster?(monsterType==="barracuda"?1.05:1.4):1.6)*(predator?.83:1);
+    if(r>15){
+      ctx.save();ctx.globalAlpha*=.17;ctx.filter='brightness(0) blur(3px)';
+      ctx.drawImage(sprite,-1.86,-.66,3.2,bodyHeight);ctx.restore();
+    }
+    // A slight roll gives the body volume while the head stays at the bite point.
+    ctx.scale(1,1+Math.sin(time*2.1+phase)*.022);
     ctx.filter=species?`hue-rotate(${[0,32,175,-30,65][species%5]}deg) saturate(.85)`:'none';
     // A continuous traveling wave bends the rear body and tail, with a stable head.
     for(let strip=0;strip<28;strip++){
       const u=strip/28,sx=iw*u,sw=Math.min(iw-sx,iw/28+1),bend=Math.pow(1-u,2)*Math.sin(time*10*effort+phase-u*4)*(monsterType==="whale"&&monster?.16:.3);
-      ctx.drawImage(sprite,sx,0,sw,ih,-1.9+u*3.2,-.79+bend,3.2/28+.006,(monster?(monsterType==="barracuda"?1.05:1.4):1.6)*(predator?.83:1)*(1+Math.sin(time*5+phase)*.012+Math.max(0,(u-.8)/.2)*Math.sin(bite/.38*Math.PI)*.065));
+      ctx.drawImage(texture,sx,0,sw,ih,-1.9+u*3.2,-.79+bend,3.2/28+.006,bodyHeight*(1+Math.sin(time*5+phase)*.012+Math.max(0,(u-.8)/.2)*Math.sin(bite/.38*Math.PI)*.065));
     }
     ctx.filter='none';
     if(shield){ctx.strokeStyle='#c4fff38a';ctx.lineWidth=.035;ctx.beginPath();ctx.ellipse(-.12,0,1.65,1.15,0,0,Math.PI*2);ctx.stroke()}

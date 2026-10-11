@@ -17,3 +17,9 @@
 
 .theme-studio .fish-hud span{background:#edf3ef;border-color:#d0dfd8;color:#577269}.theme-studio .fish-hud b{color:#284d43}.theme-studio .fish-controls{color:#577269}
 @media(max-width:760px){.nv3d-mode{display:none}}
+
+.nv3d-pattern{border:10px solid #393d59;border-top-color:#535877;border-bottom-color:#262b43;border-radius:20px;background:#20253b;box-shadow:0 9px 0 #1a2033,0 24px 42px #17213b38;margin:24px auto 30px;height:460px}
+.nv3d-pattern .nv3d-caption{color:#d6d9f6;letter-spacing:1.3px;font-size:8px}
+.nv3d-puzzle{border-width:6px;border-top-color:#718b91;border-bottom-color:#294450;box-shadow:0 7px 0 #203541,0 22px 40px #071f3533}
+.fish-canvas{box-shadow:inset 0 0 35px #041a3755,0 18px 38px #072a3f30}
+@media(max-width:760px){.nv3d-pattern{height:auto;aspect-ratio:1;border-width:10px;border-radius:16px}.nv3d-pattern .nv3d-caption{font-size:7px;top:10px;left:10px;letter-spacing:.6px}}
