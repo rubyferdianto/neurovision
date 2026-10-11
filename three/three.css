@@ -16,3 +16,4 @@
 @media(max-width:760px){.nv3d-host{height:400px;border-radius:12px}.nv3d-puzzle,.nv3d-pattern{height:360px}.nv3d-guess{height:260px}.nv3d-fish{height:clamp(360px,58vh,540px)}.nv3d-mode{font-size:8px;padding:6px}.nv3d-caption{font-size:8px;letter-spacing:1px}.nv3d-alert{font-size:11px}}
 
 .theme-studio .fish-hud span{background:#edf3ef;border-color:#d0dfd8;color:#577269}.theme-studio .fish-hud b{color:#284d43}.theme-studio .fish-controls{color:#577269}
+@media(max-width:760px){.nv3d-mode{display:none}}
